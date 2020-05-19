@@ -25,7 +25,10 @@ class PostsController < ApplicationController
 
 	def update
 	  @post = Post.find(params[:id])
-	  @post.update(title: params[:title], description: params[:description])
-	  redirect_to post_path(@post)
+	#   the code below does not allow for updating the changes, unpermitted paramaters
+	#   @post.update(title: params[:title], description: params[:description])
+	#   let's change it and require the permission 
+	  @post.update(params.require(:post).permit(:title, :description))
+      redirect_to post_path(@post)
 	end
 end
